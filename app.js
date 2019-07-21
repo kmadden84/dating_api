@@ -3,7 +3,6 @@
 // load modules
 const express = require('express');
 var bodyParser = require('body-parser');
-const morgan = require('morgan');
 var cors = require('cors')
 
 //const routes = require('./routes');
@@ -16,7 +15,7 @@ const app = express();
 //app.use(express.json());
 
 // setup morgan which gives us http request logging
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(cors())
 
 app.use('/uploads', express.static('uploads'));
