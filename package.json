@@ -1,0 +1,29 @@
+{
+  "name": "dating_api",
+  "version": "0.0.1",
+  "description": "api for dating website, returns user info and credentials as JSON data",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "seed": "cross-env DB_ENABLE_LOGGING=true node './seed'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Madden",
+  "license": "MIT",
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.1",
+    "promise.prototype.finally": "^3.1.0",
+    "sequelize": "^5.10.0",
+    "sequelize-cli": "^5.5.0",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "Images": [
+    {
+      "imageName": "a",
+      "imageData": "/images/cindy.jpg"
+    },
+    {
+      "imageName": "b",
+      "imageData": "/images/mark.jpg"
+    }
+  ],
+  "Credential": [
+    {      
+      "first_name": "Sally",
+      "last_name": "Jones",
+      "username": "joe@smith.com",
+      "password": "joepassword"
+    },
+    {
+      "first_name": "Dale",
+      "last_name": "Gribble",
+      "username": "sally@jones.com",
+      "password": "sallypassword"
+    }
+  ],
+  "User": [
+    {
+      "fav_movie": "Indiana Jones",
+      "fav_band": "Weezer",
+      "fav_song": "Beverly Hills",
+      "gender": "woman",
+      "looking_for": "Man",
+      "drinking": "socially",
+      "education": "Bachelors Degree",
+      "build": "fat",
+      "living_status": "alone",
+      "age": "32",
+      "ideal_vaca": "Log Cabin",
+      "fav_cheese": "Cheddar",
+      "fav_timeofday": "Evening",
+      "fav_mov_genre": "comedy",
+      "fav_weather": "sunny",
+      "fav_drink": "appletini",
+      "fav_cuisine": "italian",
+      "credId": 1,
+      "imgId": 1
+    },
+    {
+      "fav_movie": "Terminator",
+      "fav_band": "Beatles",
+      "fav_song": "Fool on the Hill",
+      "looking_for": "Woman",
+      "gender": "Man",
+      "drinking": "often",
+      "education": "Certificate",
+      "build": "skinny",
+      "living_status": "roommate",
+      "age": "40",
+      "ideal_vaca": "Tropical",
+      "fav_cheese": "Gouda",
+      "fav_timeofday": "Morning",
+      "fav_mov_genre": "horror",
+      "fav_weather": "stormy",
+      "fav_drink": "vodka martini",
+      "fav_cuisine": "indian",
+      "credId": 2,
+      "imgId": 2
+    }
+  ]
+}
