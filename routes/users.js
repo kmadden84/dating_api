@@ -72,7 +72,7 @@ const id = req.body.id;
           }
         }
       ], 
-      [Op.and]: [
+      [Op.or]: [
         {
           fav_movie: {
             [Op.like]: '%' + movie + '%'
