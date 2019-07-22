@@ -167,8 +167,6 @@ const id = req.body.id;
       // as: 'credId'
       }
     ]
-
-
   }).then(function (users) {
     //  let pages = Math.ceil(catalog.count / limit);
     return res.status(200).json({ results: users });
@@ -178,6 +176,37 @@ const id = req.body.id;
       res.status(200).json({ results: err });
     });
 });
+
+router.get('/:id', (req, res) => {
+  const courseId = req.params.id;
+  User.findAll({
+    //order: [["description", "DESC"]],
+    where: {
+      id: req.params.id
+    },
+    include: [
+      {
+        model: Credential,
+      // as: 'credId'
+      },
+      {
+        model: Images,
+      // as: 'credId'
+      }
+    ]
+  }).then(function (user) {
+    if (!user.length) {
+      return res.status(400).json({ 'Error': 'No User Found With This Id' }).end();
+    } else {
+      return res.status(200).json(user)
+    }
+  }).catch(function (err) {
+    res.send(500);
+  });
+});
+
+
+
 
 router.post('/image', authUser.authenticateUser, upload.single('imageData'), function (req, res) {
   const credentials = auth(req);
