@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter your password'
         }
       }
-    },
+    }
   }, {
     //timestamps: false,
    //freezeTableName: true,
@@ -97,6 +97,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
   });
+  Credential.hasMany(models.Messages, {
+    foreignKey: {
+      as: 'creator',
+      fieldName: 'senderId',
+      targetKey: 'senderId',
+      allowNull: false,
+    },
+});
   };
   return Credential;
 };

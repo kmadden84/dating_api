@@ -263,6 +263,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     }); 
+    User.hasMany(models.Messages, {
+      foreignKey: {
+        as: 'recipient',
+        targetKey: 'recipientId',
+        fieldName: 'recipientId',
+        allowNull: true,
+      },
+    }); 
   };
   return User;
 };

@@ -5,7 +5,7 @@ const bcryptjs = require('bcryptjs');
 const auth = require('basic-auth');
 const { sequelize, models } = require('../db');
 const Sequelize = require('sequelize');
-const { Credential, User, Images } = models;
+const { Credential, User, Images, Messages } = models;
 const router = express.Router();
 const authUser = require('./authenticate.js');
 const Op = Sequelize.Op;
@@ -64,11 +64,20 @@ const id = req.body.id;
 
 
   User.findAndCountAll({
+
+  //  [sequelize.literal('(SELECT COUNT(*) FROM User WHERE User.fav_movie LIKE %movie% )'), 'PostCount']
+
+
     where: {
       [Op.and]: [
         {
           gender: {
-            [Op.eq]: seeking
+            [Op.eq]:  seeking
+          }
+        },
+        {
+          looking_For: {
+            [Op.eq]: gender
           }
         }
       ], 
@@ -177,8 +186,13 @@ const id = req.body.id;
     });
 });
 
+
+
+
+
+
 router.get('/:id', (req, res) => {
-  const courseId = req.params.id;
+  const id = req.params.id;
   User.findAll({
     //order: [["description", "DESC"]],
     where: {
@@ -204,6 +218,38 @@ router.get('/:id', (req, res) => {
     res.send(500);
   });
 });
+
+
+
+
+
+router.post('/messages', authUser.authenticateUser, function (req, res) {
+  const credentials = auth(req);
+  Credential.findOne({
+    where: {
+      username: credentials.name
+    }
+  }).then(function (cred) {
+    Messages.create({
+      message: req.body.message,
+      subject: req.body.subject,
+      senderId: cred.id,
+      recipientId: req.body.recipient
+    })
+    }).then(async function (user) {
+      console.log('image added')
+      return res.location('/').status(200).json({ 'Message': 'Message Sent' });
+    }).catch(function (err) {
+      if (err.name === "SequelizeValidationError") {
+        console.log(err)
+        return res.status(400).json({ 'Error': err.message });
+      } else {
+        throw err;
+      }
+    }).catch(function (err) {
+      res.json({ 'Error': err });
+    });
+  });  
 
 
 
@@ -236,6 +282,8 @@ router.post('/image', authUser.authenticateUser, upload.single('imageData'), fun
     });
   });    
 
+
+  
 router.post('/', authUser.authenticateUser, function (req, res) {
   const credentials = auth(req);
   Credential.findOne({
@@ -314,32 +362,34 @@ router.put('/image', authUser.authenticateUser, upload.single('imageData'), func
   });   
 });   
 
-router.put('/', authUser.authenticateUser, function (req, res) {
-  const credentials = auth(req);
-  Credential.findOne({
-    where: {
-      username: credentials.name
-    }
-  }).then(function (cred) {
-    User.findByPk(cred.id).then(function (user) {
-    user.update(req.body)
-    })
-      .then(function (user) {
-        console.log('User Added');
-        return res.location('/').sendStatus(200).json({ 'Message': 'Details Updated' }).end();
-      }).catch(function (err) {
-        if (err.name === "SequelizeValidationError") {
-          console.log(err)
-          return res.status(400).json({ 'Error': err.message });
-        } else {
-          throw err;
-        }
-      }).catch(function (err) {
-        console.log(err);
-        res.send(500);
-      });
-  });
-});
+
+
+
+  router.put('/', authUser.authenticateUser, function (req, res) {
+    const credentials = auth(req);
+    Credential.findOne({
+      where: {
+        username: credentials.name
+      }
+    }).then(function (cred) {
+      User.findByPk(cred.id).then(function (user) {
+        user.update(req.body).then(function (user) {
+          console.log('User Added');
+          return res.location('/').sendStatus(200).json({ 'Message': 'Details Updated' })  
+        }).catch(function (err) {
+          if (err.name === "SequelizeValidationError") {
+            console.log(err)
+            return res.status(400).json({ 'Error': err.message });
+          } else {
+            throw err;
+          }
+        }).catch(function (err) {
+          console.log(err);
+          res.send(500);
+        });
+    });
+  })     
+}) 
 
 router.get('/', authUser.authenticateUser, function (req, res) {
   const credentials = auth(req);
