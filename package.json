@@ -4,6 +4,7 @@
   "description": "api for dating website, returns user info and credentials as JSON data",
   "main": "app.js",
   "scripts": {
+    "build": "next build",
     "start": "node ./app.js",
     "seed": "cross-env DB_ENABLE_LOGGING=true node './seed'",
     "test": "echo \"Error: no test specified\" && exit 1"
